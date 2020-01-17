@@ -43,7 +43,6 @@ public class LONGEST_ARITHMETIC_PROGRESSION {
 				dp[i][j] = 2;
 				i--;
 			}
-
 			print2dArray(dp);
 		}
 		return longestAp;
