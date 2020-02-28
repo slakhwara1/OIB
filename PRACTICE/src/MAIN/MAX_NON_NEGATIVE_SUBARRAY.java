@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class MAX_NON_NEGATIVE_SUBARRAY {
 
 	static class Model {
-		int val;
+		long val;
 		int startIndex;
 		int endIndex;
 
@@ -18,13 +18,13 @@ public class MAX_NON_NEGATIVE_SUBARRAY {
 	}
 
 	public static int[] maxset(int[] A) {
-		Model maxSum = new Model(A[0], 0, 0);
-		Model tempSum = new Model(0, 0, 0);
+		Model maxSum = new Model(0, 0, 0);
+		Model tempSum = new Model(-1, 0, 0);
 
 		for (int i = 0; i < A.length; i++) {
 			Model currSum = new Model(A[i], i, i);
 			if (currSum.val >= 0) {
-				if (tempSum.val == Integer.MIN_VALUE)
+				if (tempSum.val == -1)
 					tempSum = currSum;
 				else {
 					tempSum.val += currSum.val;
@@ -34,7 +34,7 @@ public class MAX_NON_NEGATIVE_SUBARRAY {
 				tempSum.val += currSum.val;
 				tempSum.endIndex++;
 			} else
-				tempSum = new Model(0, 0, 0);
+				tempSum = new Model(-1, 0, 0);
 			if (tempSum.val > maxSum.val)
 				maxSum = tempSum;
 			else if (tempSum.val == maxSum.val) {
@@ -50,10 +50,8 @@ public class MAX_NON_NEGATIVE_SUBARRAY {
 
 		int size = (maxSum.endIndex - maxSum.startIndex) + 1;
 		int[] result = new int[size];
-		ArrayList<Integer> al = new ArrayList<Integer>();
 		int start = maxSum.startIndex, end = maxSum.endIndex;
 		for (int i = start, k = 0; i <= end; i++, k++) {
-			al.add(A[i]);
 			result[k] = A[i];
 		}
 		return result;
@@ -74,10 +72,11 @@ public class MAX_NON_NEGATIVE_SUBARRAY {
 	}
 
 	public static void main(String[] args) {
-		int[] A = new int[] { 1, 2, 5, -7, 2, 3 };
+//		int[] A = new int[] { 1, 2, 5, -7, 2, 3 };
 //		int[] A = new int[] { 10, -1, 2, 3, -4, 100 };
 //		int[] A = new int[] { -1, -1, -1, -1, -1 };
 //		int[] A = new int[] { 0, 0, -1, 0 };
+		int[] A = new int[] { 1967513926, 1540383426, -1303455736, -521595368 };
 		Arrays.stream(maxset(A)).forEach(x -> System.out.print(x + " "));
 	}
 }
